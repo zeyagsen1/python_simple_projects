@@ -3,88 +3,37 @@ import tkinter as tk
 from tkinter import *
 
 
-memory=""
-first=None
-second=None
-newstrr=""
-signs= ""
+
+
 
 def button_click(k):
-  result=0
-  global memory
-  global first
-  global second
-  global newstrr
-  global signs
-  global multiply
+    try:
+        global memory
+        global first
+        global second
+        global newstrr
+        global signs
+        global multiply
 
-  part_two_active=False
-  if k!=13:
-   text.insert(END,k)
+        part_two_active = False
+        if k != 13 and k != 99:
+            text.insert(END, k)
 
+        if k == 13:
+            evaluate = str(eval(text.get()))
+            text.delete(0, END)
+            text.insert(0, evaluate)
 
+        if k == 99:
+            text.delete(0, END)
 
-  if k=="x" or k=='-'or k=='/'or k=='+':
-      modified_string = memory.replace(k, '')
-      print('modified string =' + modified_string)
-      first=modified_string
-      signs=k
-
-
-
-  else:
-
-
-
-      if k!=13:
-       memory = text.get()
-       print(memory)
-
-  if k==13:
-   sum=0
-   f=1
-   only_numbers = memory.split(signs)
-   numbers_length=len(only_numbers)
-
-   p=0
-   a=0
-   t=0
-   multiply=1
-   for i in range(numbers_length):
-    if signs== '+':
-        sum=sum+int(only_numbers[i])
-        print(sum)
-
-    if signs== '-'and i<numbers_length-1:
-     if t==0:
-       a+=int(only_numbers[i])-int(only_numbers[i+1])
-       t=1
-     else:
-       a-=int(only_numbers[i+1])
-
-    if signs=='x':
-        multiply*=int(only_numbers[i])
-        print(multiply)
-
-    if signs== '/'and i<numbers_length-1:
-     if t==0:
-
-
-       a+=int(only_numbers[i])/int(only_numbers[i+1])
-       t=1
-     else:
-       print(only_numbers[i])
-
-       a/=int(only_numbers[i+1])
-
-
-
-
+    except Exception as e:
+        print("An exception occurred:", e)
 
 frame = tk.Tk()
 
 frame.geometry("500x500")
-
+frame.title("Calculator")
 label = tk.Label(frame, text="CALCULATOR", font=('Arial', 15))
 label.pack(padx=20, pady=20)
 
@@ -141,13 +90,23 @@ btn11.grid(row=3, column=1, sticky='we')
 btn12 = tk.Button(layout, text="-", font=("Arial", 18), command=lambda: button_click("-"))
 btn12.grid(row=3, column=2, sticky='we')
 
-btn13 = tk.Button(layout, text="x", font=("Arial", 18), command=lambda: button_click("x"))
+btn13 = tk.Button(layout, text="x", font=("Arial", 18), command=lambda: button_click("*"))
 btn13.grid(row=4, column=0, sticky='we')
 
 btn14 = tk.Button(layout, text="/", font=("Arial", 18), command=lambda: button_click("/"))
 btn14.grid(row=4, column=1, sticky='we')
 
+
 btn15 = tk.Button(layout, text="Calculate", font=("Arial", 18), command=lambda: button_click(13))
+btn15.grid(row=4, column=2, sticky='we')
+
+
+btn16 = tk.Button(layout, text="Clear", font=("Arial", 18), command=lambda: button_click(99))
+btn16.grid(row=5, column=2, sticky='we')
+
+btn17 = tk.Button(layout, text=".", font=("Arial", 18), command=lambda: button_click("."))
+btn17.grid(row=5, column=0, sticky='we')
+
 ##command helps us to call the function when we click on that button
 ##it does not take () as methods just takes the name of the fuction
 ##becuse of that when we need to put variables inside a method we call
