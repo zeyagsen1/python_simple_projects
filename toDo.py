@@ -2,6 +2,7 @@ from tkinter import filedialog, Tk, Button, Frame, BOTTOM, Label, RIGHT, LabelFr
     filedialog, END
 
 root = Tk()
+root.title("To Do App")
 layout = LabelFrame(root)  ## layout=Frame(root) is the same. label frame just shows us the borders of the frame.
 
 root.geometry("400x400")
@@ -16,14 +17,19 @@ y = 40
 list = []
 
 
+
 def open_list():
    global line
+
+
    file_path= file=filedialog.askopenfilename()
    '''
    file=open(file_path,'r')
    print((file.read()))
    '''
    with open(file_path, 'r') as file:
+        global list2
+        global text
         a = 0
         # Iterate over the lines of the file
         for line in file:
@@ -35,8 +41,10 @@ def open_list():
 
             button1 = Checkbutton(text=line.strip())
 
-
+            list.append(button1)
+            text.append(line.strip())
             button1.place(x=3, y=y)
+
 
 
 
@@ -47,6 +55,7 @@ def save_list():
 
 
 def delete_all():
+
     for i in range(len(list)):
         a = list[i].destroy()
 
@@ -65,7 +74,7 @@ def button_command():
     y += 20
 
     button1 = Checkbutton(text=ab.get())
-    button1.configure(bg="lightblue")
+
 
 
     button1.place(x=3, y=y)
@@ -118,23 +127,31 @@ def delete():
 
 label = Label(text="To Do List", font=("Arial", 18))
 label.pack()
-label.configure(bg="purple")
+label.configure(bg="yellow")
+layout.pack(fill="x", side=BOTTOM)
 
 save_button = Button(root, text="Save", command=save_list)
-save_button.pack()
+#save_button.place(x=324,y=330)
+save_button.pack(side=RIGHT,anchor='se')
+
+
+save_button.configure(bg="yellow")
 
 open_button = Button(root, text="Open", command=open_list)
-open_button.pack()
+#open_button.place(x=360,y=330)
+open_button.pack(side=RIGHT,anchor='se')
+
+open_button.configure(bg="blue")
 
 
 add_button = Button(layout, text="ADD", font=("Arial", 15), command=add)
 add_button.grid(row=0, column=0, sticky='we')
+
 add_button.configure(bg="blue")
 
 add_button1 = Button(layout, text="DELETE", font=("Arial", 15), command=delete)
 add_button1.grid(row=0, column=1, sticky='we')
 add_button1.configure(bg="yellow")
 
-layout.pack(fill="x", side=BOTTOM)
 
 root.mainloop()
